@@ -17,7 +17,9 @@ class Controls extends Component {
                 {/* SORT : END */}
                 {/* ADD : START */}
                 <Add onClickAdd = {this.props.onClickAdd}
-                     showForm = {this.props.showForm}/>
+                     showForm = {this.props.showForm}
+                     editTask = {this.props.editTask}
+                     nameEditTask = {this.props.nameEditTask}/>
                 {/* ADD : END */}
             </div>
         );

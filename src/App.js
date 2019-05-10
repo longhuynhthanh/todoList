@@ -13,7 +13,13 @@ class App extends Component {
     this.state = {
       items: Tasks,
       showForm: false,
-      strSearch: ''
+      strSearch: '',
+      editTask: false,
+      editFinish: false,
+      TaskEdit: {
+        name: '',
+        level: 0,
+      }
     };
   }
   showFormToggle = () => {
@@ -45,18 +51,26 @@ class App extends Component {
       items: Tasks
     });
   }
-  editTask = (id, name, level) => {
-    Tasks.forEach(task => {
-      if(task.id === id){
-        task.name = name;
-        task.level = level;
-      }
-    });
+  showFormEditTask = (task) => {
     this.setState({
-      items: Tasks
+      editTask: true,
+      showForm: true,
+      TaskEdit: task,
+      editFinish: false
     });
   }
-  deleteTask = (id) => {
+  editTaskEvent = (id, name, level) => {
+    const index = this.state.items.findIndex(item => item.id === id);
+    const newTasks = this.state.items;
+    newTasks[index].name = name; 
+    newTasks[index].level = level;
+    this.setState({
+      items: newTasks,
+      editTask: false,
+      editFinish: true
+    });
+  }
+  deleteTaskEvent = (id) => {
     const newTasks = this.state.items.filter(task => task.id !== id);
     this.setState({
       items: newTasks
@@ -69,6 +83,9 @@ class App extends Component {
     if (showForm) {
       elementShowForm = <Form closeForm={this.closeForm}
                               AddTask = {this.addTask}
+                              editTask = {this.state.editTask}
+                              TaskEdit = {this.state.TaskEdit}
+                              editTaskEvent = {this.editTaskEvent}
                         />;
     }
 
@@ -80,7 +97,9 @@ class App extends Component {
         {/* CONTROL (SEARCH + SORT + ADD) : START */}
         <Controls onClickAdd={this.showFormToggle}
           showForm={showForm}
-          Search={this.handleSearch} />
+          Search={this.handleSearch}
+          editTask = {this.state.editTask}
+          nameEditTask = {this.state.TaskEdit.name} />
         {/* CONTROL (SEARCH + SORT + ADD) : END */}
         {/* FORM : START */}
         {elementShowForm}
@@ -88,8 +107,10 @@ class App extends Component {
         {/* LIST : START */}
         <List
           items = {items}
-          editTask = {this.editTask}
-          deleteTask = {this.deleteTask} />
+          showFormEditTask = {this.showFormEditTask}
+          deleteTaskEvent = {this.deleteTaskEvent}
+          editTask = {this.state.editTask}
+          editFinish = {this.state.editFinish} />
         {/* LIST: END */}
       </div>
     );

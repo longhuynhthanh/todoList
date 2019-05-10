@@ -13,7 +13,9 @@ class List extends Component {
                         STT = {index + 1}
                         item = {item}
                         editTask = {this.props.editTask}
-                        deleteTask = {this.props.deleteTask}
+                        showFormEditTask = {this.props.showFormEditTask}
+                        deleteTaskEvent = {this.props.deleteTaskEvent}
+                        editFinish = {this.props.editFinish}
                     />;
         });
         return (

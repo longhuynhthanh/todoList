@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 
 class Form extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             nameTask: '',
-            level : 0
+            level: 0 
         };
     }
     handleCancel = () => {
@@ -20,11 +20,17 @@ class Form extends Component {
         this.setState({
             level: event.target.value
         });
+        console.log(this.state.level);
     }
     addTask = () => {
         const name = this.state.nameTask;
         const level = this.state.level;
-        this.props.AddTask(name, level);
+        if(this.props.editTask === false){
+            this.props.AddTask(name, level);
+        }else{
+            const id = this.props.TaskEdit.id;
+            this.props.editTaskEvent(id, name, level);
+        }
     }
     render() {
         return (
@@ -33,18 +39,18 @@ class Form extends Component {
                 <div className="col-6">
                     <form method="POST" className="form-inline">
                         <div className="form-group">
-                            <input type="text" className="form-control" value = {this.state.nameTask} placeholder="Task Name" onChange = {this.handleInputChange}/>
+                            <input type="text" className="form-control" value={this.state.nameTask} placeholder="Task Name" onChange={this.handleInputChange} />
                         </div>
                         <div className="form-group">
-                            <select name="ds" id="inputDs" className="form-control" required="required" onChange = {this.handleSelectChange}>
+                            <select name="ds" id="inputDs" className="form-control" required="required" value = {this.state.level} onChange={this.handleSelectChange}>
                                 Small
                                 <option value={0}>Small</option>
                                 <option value={1}>Medium</option>
                                 <option value={2}>High</option>
                             </select>
                         </div>
-                        <button onClick = {this.addTask} type="button" className="btn btn-outline-success">Submit</button>
-                        <button onClick = {this.handleCancel} type="button" className="btn btn-outline-danger">Cancel</button>
+                        <button onClick={this.addTask} type="button" className="btn btn-outline-success">Submit</button>
+                        <button onClick={this.handleCancel} type="button" className="btn btn-outline-danger">Cancel</button>
                     </form>
                 </div>
             </div>
