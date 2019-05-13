@@ -1,42 +1,30 @@
 import React, { Component } from 'react';
 class Item extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            selectItem: ''
-        };
+    DeleteTask = () => {
+        let id = this.props.task.id;
+        this.props.DeleteTask(id);
     }
-    showLevel(level){
-        let elementLevel = <td className="text-center"><span className="badge badge-secondary">Small</span></td>;
-        if(level === 1){
-            elementLevel = <td className="text-center"><span className="badge badge-success">Medium</span></td>;
-        }else if(level === 2){
-            elementLevel = <td className="text-center"><span className="badge badge-danger">High</span></td>;
-        }
-        return elementLevel; 
-    }
-    handleEdit = () => {
-        if(this.props.editTask === false){
-            this.setState({
-                selectItem: 'bg-light'
-            });
-            this.props.showFormEditTask(this.props.item);
-        }
-    }
-    handleDelete = (event) => {
-        const id = event.target.value;
-        this.props.deleteTaskEvent(id);
+    EditTask = () => {
+        const data = this.props.task;
+        this.props.EditTask(data);
     }
     render() {
+        const {task, index} = this.props;
+        let elmLevel = <td className="text-center"><span className="badge badge-danger">High</span></td>;
+        if(task.level === 0){
+            elmLevel = <td className="text-center"><span className="badge badge-secondary">Small</span></td>;
+        }else if(task.level === 1){
+            elmLevel = <td className="text-center"><span className="badge badge-success">Medium</span></td>;
+        }
         return (
-            <tr className={this.props.editFinish ? '' : this.state.selectItem}>
-                <td className="text-center">{this.props.STT}</td>
-                <td>{this.props.item.id}</td>
-                <td>{this.props.item.name}</td>
-                {this.showLevel(this.props.item.level)}
+            <tr>
+                <td className="text-center">{index + 1}</td>
+                <td>{task.id}</td>
+                <td>{task.name}</td>
+                {elmLevel}
                 <td>
-                    <button onClick = {this.handleEdit} type="button" className="btn btn-warning" value = {this.props.item.id}>Edit</button>
-                    <button onClick = {this.handleDelete} type="button" className="btn btn-danger" value = {this.props.item.id}>Delete</button>
+                    <button type="button" className="btn btn-warning" onClick = {this.EditTask}>Edit</button>
+                    <button type="button" className="btn btn-danger" onClick = {this.DeleteTask}>Delete</button>
                 </td>
             </tr>
         );

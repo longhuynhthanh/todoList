@@ -1,22 +1,16 @@
 import React, { Component } from 'react';
 import Item from './item';
 class List extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
     render() {
-        let items = this.props.items;
-        let element = items.map((item, index) => {
-            return <Item 
-                        key = {index}
-                        STT = {index + 1}
-                        item = {item}
-                        editTask = {this.props.editTask}
-                        showFormEditTask = {this.props.showFormEditTask}
-                        deleteTaskEvent = {this.props.deleteTaskEvent}
-                        editFinish = {this.props.editFinish}
-                    />;
+        let {tasks, DeleteTask, EditTask} = this.props;
+        let showTasks = tasks.map((task, index) => {
+            return <Item
+                        key = {task.id}
+                        index = {index}
+                        task= {task}
+                        DeleteTask = {DeleteTask}
+                        EditTask = {EditTask}
+                    />
         });
         return (
             <div className="panel panel-success mx-auto">
@@ -32,7 +26,7 @@ class List extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {element}
+                        {showTasks}
                     </tbody>
                 </table>
             </div>

@@ -3,23 +3,23 @@ import Search from './search';
 import Sort from './sort';
 import Add from './add';
 class Controls extends Component {
-    constructor(props){
-        super(props);
-    }
     render() {
+        const {ShowForm, nameEditTask, onSearch} = this.props;
         return (
             <div className="row">
                 {/* SEARCH : START */}
-                <Search Search = {this.props.Search}/>
+                <Search 
+                    onSearch = {onSearch}
+                />
                 {/* SEARCH : END */}
                 {/* SORT : START */}
                 <Sort />
                 {/* SORT : END */}
                 {/* ADD : START */}
-                <Add onClickAdd = {this.props.onClickAdd}
-                     showForm = {this.props.showForm}
-                     editTask = {this.props.editTask}
-                     nameEditTask = {this.props.nameEditTask}/>
+                <Add 
+                    ShowForm        = {ShowForm}
+                    nameEditTask    = {nameEditTask}
+                />
                 {/* ADD : END */}
             </div>
         );

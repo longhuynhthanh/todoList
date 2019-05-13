@@ -8,5 +8,5 @@ let Tasks = [
     { id: id(), name: 'Climb Mountain', level: 0 },
     { id: id(), name: 'Swimming', level: 0 }
   ];
-
+  
   export default Tasks;

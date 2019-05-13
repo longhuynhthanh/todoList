@@ -11,106 +11,91 @@ class App extends Component {
   constructor(drops) {
     super(drops);
     this.state = {
-      items: Tasks,
-      showForm: false,
-      strSearch: '',
-      editTask: false,
-      editFinish: false,
-      TaskEdit: {
-        name: '',
-        level: 0,
-      }
+      tasks: Tasks,
+      isShowForm: false,
+      editTask: null,
     };
   }
-  showFormToggle = () => {
+  ShowForm = () => {
     this.setState({
-      showForm: !this.state.showForm
+      isShowForm: !this.state.isShowForm,
     });
   }
-
-  closeForm = () => {
+  AddTask = (data) => {
+    let newTasks = this.state.tasks;
+    if (data) {
+      if (data.id === '') {
+        // Add Task
+        data.id = id();
+        newTasks.push(data);
+        this.setState({
+          tasks: newTasks
+        });
+      } else {
+        // Edit Task
+        const index = newTasks.findIndex(task => task.id === data.id);
+        newTasks[index] = data;
+        this.setState({
+          tasks: newTasks,
+          editTask: null
+        });
+      }
+    } else {
+      console.log('data null');
+    }
+  }
+  DeleteTask = (id) => {
+    const newTasks = this.state.tasks.filter(task => task.id !== id);
     this.setState({
-      showForm: false
+      tasks: newTasks,
+      editTask: null,
+      isShowForm: false
     });
-  };
-  handleSearch = (value) => {
-    const newTasks = [];
+  }
+  EditTask = (data) => {
+    this.setState({
+      isShowForm: true,
+      editTask: data
+    });
+  }
+  onSearch = (search) => {
+    let newTasks = [];
     Tasks.forEach(task => {
-      if (task.name.toUpperCase().includes(value.toUpperCase())) {
+      if (task.name.toUpperCase().includes(search.toUpperCase())) {
         newTasks.push(task);
       }
     });
     this.setState({
-      items: newTasks,
-      strSearch: ''
-    });
-  }
-  addTask = (name, level) => {
-    Tasks.push({id: id(), name: name, level: level});
-    this.setState({
-      items: Tasks
-    });
-  }
-  showFormEditTask = (task) => {
-    this.setState({
-      editTask: true,
-      showForm: true,
-      TaskEdit: task,
-      editFinish: false
-    });
-  }
-  editTaskEvent = (id, name, level) => {
-    const index = this.state.items.findIndex(item => item.id === id);
-    const newTasks = this.state.items;
-    newTasks[index].name = name; 
-    newTasks[index].level = level;
-    this.setState({
-      items: newTasks,
-      editTask: false,
-      editFinish: true
-    });
-  }
-  deleteTaskEvent = (id) => {
-    const newTasks = this.state.items.filter(task => task.id !== id);
-    this.setState({
-      items: newTasks
+      tasks: newTasks
     });
   }
   render() {
-    let items = this.state.items;
-    let showForm = this.state.showForm;
-    let elementShowForm = <div></div>;
-    if (showForm) {
-      elementShowForm = <Form closeForm={this.closeForm}
-                              AddTask = {this.addTask}
-                              editTask = {this.state.editTask}
-                              TaskEdit = {this.state.TaskEdit}
-                              editTaskEvent = {this.editTaskEvent}
-                        />;
-    }
-
+    let { tasks, isShowForm, editTask } = this.state;
+    let ShowForm = isShowForm ? <Form
+      AddTask={this.AddTask}
+      editTask={editTask}
+    /> : '';
     return (
       <div className="container">
         {/* TITLE : START */}
         <Title />
         {/* TITLE : END */}
         {/* CONTROL (SEARCH + SORT + ADD) : START */}
-        <Controls onClickAdd={this.showFormToggle}
-          showForm={showForm}
-          Search={this.handleSearch}
-          editTask = {this.state.editTask}
-          nameEditTask = {this.state.TaskEdit.name} />
+        <Controls
+          ShowForm={this.ShowForm}
+          nameEditTask={editTask ? editTask.name : ''}
+          onSearch={this.onSearch}
+        />
         {/* CONTROL (SEARCH + SORT + ADD) : END */}
         {/* FORM : START */}
-        {elementShowForm}
+        {ShowForm}
         {/* FORM : END */}
         {/* LIST : START */}
         <List
-          items = {items}
-          showFormEditTask = {this.showFormEditTask}
-          deleteTaskEvent = {this.deleteTaskEvent}
-          editTask = {this.state.editTask}
-          editFinish = {this.state.editFinish} />
+          tasks={tasks}
+          DeleteTask={this.DeleteTask}
+          EditTask={this.EditTask}
+        />
         {/* LIST: END */}
       </div>
     );

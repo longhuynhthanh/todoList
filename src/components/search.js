@@ -4,25 +4,25 @@ class Search extends Component {
     constructor(props){
         super(props);
         this.state = {
-            strSearch: ''
+            Search: ''
         };
     }
-    handleChange = event => {
+    HandleChange = (event) => {
+        let name = event.target.name;
+        let value = event.target.value;
         this.setState({
-            strSearch: event.target.value
+            [name]: value
         });
-        this.props.Search(event.target.value);
-    }
-    handleClick = () => {
-        this.props.Search(this.state.strSearch);
+        this.props.onSearch(value);
     }
     render() {
+        let {Search} = this.state;
         return (
             <div className="col-3">
                 <div className="input-group">
-                    <input type="text" className="form-control" value = {this.state.strSearch} onChange = {this.handleChange} placeholder="Search for..." />
+                    <input type="text" className="form-control" placeholder="Search for..." name="Search" value = {Search} onChange = {this.HandleChange} />
                     <span className="input-group-btn">
-                        <button className="btn btn-info" type="button" onClick = {this.handleClick}>Go!</button>
+                        <button className="btn btn-info" type="button">Go!</button>
                     </span>
                 </div>
             </div>
