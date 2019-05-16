@@ -9,7 +9,7 @@ const ReducerTasks = (state = Tasks, action) => {
             return state;
         }
         case Type.ADD_TASK: {
-            if(action.task && action.task.id === ''){
+            if (action.task && action.task.id === '') {
                 const newTask = {
                     id: id(),
                     imageURL: action.task.imageURL,
@@ -17,16 +17,12 @@ const ReducerTasks = (state = Tasks, action) => {
                     level: action.task.level
                 };
                 state.push(newTask);
-                localStorage.setItem('tasks', JSON.stringify(state));
-                return [...state];
-            }else if (action.task && action.task.id){
+            } else if (action.task && action.task.id) {
                 const index = state.findIndex(task => task.id === action.task.id);
-                state[index] = {...state[index], imageURL: action.task.imageURL, name: action.task.name, level: action.task.level};
-                console.log(state[index]);
-                localStorage.setItem('tasks', JSON.stringify(state));
-                return [...state];
+                state[index] = { ...state[index], imageURL: action.task.imageURL, name: action.task.name, level: action.task.level };
             }
-            return null;
+            localStorage.setItem('tasks', JSON.stringify(state));
+            return [...state];
         }
         case Type.DELETE_TASK: {
             state = state.filter(task => task.id !== action.id);

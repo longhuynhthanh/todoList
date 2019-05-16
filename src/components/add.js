@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import {ShowForm, Null_SelectedItem} from './../Actions/index';
+import {ShowForm, Null_SelectedItem, onSearch} from './../Actions/index';
 class Add extends Component {
 
     ShowForm = () => {
+        this.props.onSearch('');
         this.props.Null_SelectedItem();
         this.props.ShowForm();
     }
@@ -32,6 +33,9 @@ const mapDispatchToProps = (dispatch, props) => {
         },
         Null_SelectedItem: () => {
             dispatch((Null_SelectedItem()));
+        },
+        onSearch: (value) => {
+            dispatch(onSearch(value));
         }
     };
 };

@@ -6,12 +6,12 @@ const ReducerSelectedItem = (state = SelectedItem, action) => {
     switch (action.type) {
         case Type.SELECTEDITEM: {
             state = action.task;
-            return state;
+            return {...state};
         }
         case Type.NULL_SELECTEDITEM: {
             return null;
         }
-        default: return state;
+        default: return null;
     }
 };
 

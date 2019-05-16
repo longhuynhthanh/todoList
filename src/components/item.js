@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import {DeleteTask, CloseForm, SelectedItem, OpenForm} from './../Actions/index';
+import {DeleteTask, CloseForm, SelectedItem, OpenForm, Null_SelectedItem} from './../Actions/index';
 
 class Item extends Component {
     DeleteTask = () => {
+        this.props.Null_SelectedItem();
+        this.props.CloseForm();
         let id = this.props.task.id;
         this.props.DeleteTask(id);
     }
@@ -47,6 +49,9 @@ const mapDispatchToProps = (dispatch, props) => {
         },
         OpenForm: () => {
             dispatch(OpenForm());
+        },
+        Null_SelectedItem: () => {
+            dispatch(Null_SelectedItem());
         }
     };
 };

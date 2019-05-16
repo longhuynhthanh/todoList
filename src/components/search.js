@@ -25,9 +25,6 @@ class Search extends Component {
             <div className="col-3">
                 <div className="input-group">
                     <input type="text" className="form-control" placeholder="Search for..." name="Search" value = {Search} onChange = {this.HandleChange} />
-                    <span className="input-group-btn">
-                        <button className="btn btn-info" type="button">Go!</button>
-                    </span>
                 </div>
             </div>
         );
