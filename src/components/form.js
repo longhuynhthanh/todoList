@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-
+import {connect} from 'react-redux';
+import {addTask, Null_SelectedItem, CloseForm} from './../Actions/index';
 class Form extends Component {
     constructor(props){
         super(props);
@@ -10,20 +11,20 @@ class Form extends Component {
         };
     }
     componentWillMount(){
-        if(this.props.editTask){
+        if(this.props.SelectedItem){
             this.setState({
-                id: this.props.editTask.id,
-                name: this.props.editTask.name,
-                level: this.props.editTask.level
+                id: this.props.SelectedItem.id,
+                name: this.props.SelectedItem.name,
+                level: this.props.SelectedItem.level
             });
         }
     }
     componentWillReceiveProps(nextProps){
-        if(nextProps && nextProps.editTask){
+        if(nextProps && nextProps.SelectedItem){
             this.setState({
-                id: nextProps.editTask.id,
-                name: nextProps.editTask.name,
-                level: nextProps.editTask.level
+                id: nextProps.SelectedItem.id,
+                name: nextProps.SelectedItem.name,
+                level: nextProps.SelectedItem.level
             });
         }
     }
@@ -55,8 +56,10 @@ class Form extends Component {
             name: this.state.name,
             level: level
         }
-        this.props.AddTask(task);
+        this.props.onAddTask(task);
         this.onClear();
+        this.props.Null_SelectedItem();
+        this.props.CloseForm();
     }
     render() {
         const {name, level} = this.state;
@@ -69,7 +72,7 @@ class Form extends Component {
                             <input type="text" name="name" className="form-control" value = {name} placeholder="Task Name" onChange = {this.handleChange}/>
                         </div>
                         <div className="form-group">
-                            <select name="ds" id="inputDs" name="level" className="form-control" value = {level} required="required" onChange = {this.handleChange}>
+                            <select name="level" className="form-control" value = {level} required="required" onChange = {this.handleChange}>
                                 Small
                                 <option value={0}>Small</option>
                                 <option value={1}>Medium</option>
@@ -84,4 +87,25 @@ class Form extends Component {
         );
     }
 }
-export default Form;
+
+const mapStateToProps = state => {
+    return {
+        SelectedItem: state.SelectedItem
+    };
+};
+
+const mapDispathToProps = (dispatch, props) => {
+    return {
+        onAddTask: (task) => {
+            dispatch(addTask(task));
+        },
+        Null_SelectedItem: () => {
+            dispatch(Null_SelectedItem());
+        },
+        CloseForm: () => {
+            dispatch(CloseForm());
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispathToProps)(Form);

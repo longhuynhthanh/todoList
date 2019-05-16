@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
+import {DeleteTask, CloseForm, SelectedItem, OpenForm} from './../Actions/index';
+
 class Item extends Component {
     DeleteTask = () => {
         let id = this.props.task.id;
         this.props.DeleteTask(id);
     }
-    EditTask = () => {
-        const data = this.props.task;
-        this.props.EditTask(data);
+    SelectedItem = () => {
+        this.props.OpenForm();
+        this.props.SelectedItem(this.props.task);
     }
     render() {
         const {task, index} = this.props;
@@ -23,12 +26,27 @@ class Item extends Component {
                 <td>{task.name}</td>
                 {elmLevel}
                 <td>
-                    <button type="button" className="btn btn-warning" onClick = {this.EditTask}>Edit</button>
+                    <button type="button" className="btn btn-warning" onClick = {this.SelectedItem}>Edit</button>
                     <button type="button" className="btn btn-danger" onClick = {this.DeleteTask}>Delete</button>
                 </td>
             </tr>
         );
     };
 }
-
-export default Item;
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        DeleteTask: (id) => {
+            dispatch(DeleteTask(id));
+        },
+        CloseForm: () => {
+            dispatch(CloseForm());
+        }, 
+        SelectedItem: (task) => {
+            dispatch(SelectedItem(task));
+        },
+        OpenForm: () => {
+            dispatch(OpenForm());
+        }
+    };
+};
+export default connect(null, mapDispatchToProps)(Item);

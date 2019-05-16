@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
+import {onSearch, CloseForm, Null_SelectedItem} from './../Actions/index';
 
 class Search extends Component {
     constructor(props){
@@ -8,6 +10,8 @@ class Search extends Component {
         };
     }
     HandleChange = (event) => {
+        this.props.CloseForm();
+        this.props.Null_SelectedItem();
         let name = event.target.name;
         let value = event.target.value;
         this.setState({
@@ -29,4 +33,18 @@ class Search extends Component {
         );
     }
 }
-export default Search;
+
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        onSearch: (string) => {
+            dispatch(onSearch(string));
+        },
+        CloseForm: () => {
+            dispatch(CloseForm());
+        },
+        Null_SelectedItem: () => {
+            dispatch(Null_SelectedItem());
+        }
+    };
+};
+export default connect(null, mapDispatchToProps)(Search);

@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import Item from './item';
+import {connect} from 'react-redux';
 class List extends Component {
     render() {
-        let {tasks, DeleteTask, EditTask} = this.props;
+        let {tasks} = this.props;
         let showTasks = tasks.map((task, index) => {
             return <Item
                         key = {task.id}
                         index = {index}
                         task= {task}
-                        DeleteTask = {DeleteTask}
-                        EditTask = {EditTask}
                     />
         });
         return (
@@ -33,4 +32,9 @@ class List extends Component {
         );
     }
 }
-export default List;
+const mapStateToProps = (state) => {
+    return {
+        tasks: state.Tasks
+    };
+};
+export default connect(mapStateToProps, null)(List);
