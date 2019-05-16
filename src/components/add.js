@@ -9,12 +9,12 @@ class Add extends Component {
     }
     render() {
         const {SelectedItem} = this.props;
-        let elmButton = <button type="button" className="btn btn-danger btn-block btn-block" onClick = {this.ShowForm}>Add Task</button>; 
+        let elmButton = <button type="button" className="btn btn-danger btn-block" onClick = {this.ShowForm}>Add Task</button>; 
         if (SelectedItem !== null){
-            elmButton = <button type="button" className="btn btn-danger btn-block btn-block" onClick = {this.ShowForm}>Edit Task: {SelectedItem.name}</button>;
+            elmButton = <button type="button" className="btn btn-success btn-block" onClick = {this.ShowForm}>Edit Task: {SelectedItem.name}</button>;
         }
         return (
-            <div className="col-5">
+            <div className="col-6">
                 {elmButton}
             </div>
         );

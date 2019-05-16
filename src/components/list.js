@@ -18,6 +18,7 @@ class List extends Component {
                     <thead>
                         <tr>
                             <th style={{ width: '10%' }} className="text-center">#</th>
+                            <th>Hình Ảnh</th>
                             <th>ID</th>
                             <th>Task</th>
                             <th style={{ width: '20%' }} className="text-center">Level</th>

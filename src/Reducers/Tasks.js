@@ -12,6 +12,7 @@ const ReducerTasks = (state = Tasks, action) => {
             if(action.task && action.task.id === ''){
                 const newTask = {
                     id: id(),
+                    imageURL: action.task.imageURL,
                     name: action.task.name,
                     level: action.task.level
                 };
@@ -20,7 +21,7 @@ const ReducerTasks = (state = Tasks, action) => {
                 return [...state];
             }else if (action.task && action.task.id){
                 const index = state.findIndex(task => task.id === action.task.id);
-                state[index] = {...state[index], name: action.task.name, level: action.task.level};
+                state[index] = {...state[index], imageURL: action.task.imageURL, name: action.task.name, level: action.task.level};
                 console.log(state[index]);
                 localStorage.setItem('tasks', JSON.stringify(state));
                 return [...state];

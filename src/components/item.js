@@ -13,19 +13,20 @@ class Item extends Component {
     }
     render() {
         const {task, index} = this.props;
-        let elmLevel = <td className="text-center"><span className="badge badge-danger">High</span></td>;
+        let elmLevel = <td className="text-center align-middle"><span className="badge badge-danger">High</span></td>;
         if(task.level === 0){
-            elmLevel = <td className="text-center"><span className="badge badge-secondary">Small</span></td>;
+            elmLevel = <td className="text-center align-middle"><span className="badge badge-secondary">Small</span></td>;
         }else if(task.level === 1){
-            elmLevel = <td className="text-center"><span className="badge badge-success">Medium</span></td>;
+            elmLevel = <td className="text-center align-middle"><span className="badge badge-success">Medium</span></td>;
         }
         return (
             <tr>
-                <td className="text-center">{index + 1}</td>
-                <td>{task.id}</td>
-                <td>{task.name}</td>
+                <td className="text-center align-middle">{index + 1}</td>
+                <td><img src={task.imageURL} className="img-thumbnail" alt="Cinque Terre" width="200" height="100" /></td>
+                <td className="align-middle">{task.id}</td>
+                <td className="align-middle">{task.name}</td>
                 {elmLevel}
-                <td>
+                <td className="align-middle">
                     <button type="button" className="btn btn-warning" onClick = {this.SelectedItem}>Edit</button>
                     <button type="button" className="btn btn-danger" onClick = {this.DeleteTask}>Delete</button>
                 </td>
