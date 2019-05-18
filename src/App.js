@@ -29,6 +29,7 @@ class App extends Component {
         {/* FORM : START */}
         {ShowForm}
         {/* FORM : END */}
+        <hr/>
         {/* LIST : START */}
         <List/>
         {/* LIST: END */}

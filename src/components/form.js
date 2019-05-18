@@ -39,6 +39,7 @@ class Form extends Component {
         });
     }
     onClear = () => {
+        this.props.Null_SelectedItem();
         this.setState({
             id: '',
             imageURL: '',
@@ -63,7 +64,6 @@ class Form extends Component {
         }
         this.props.onAddTask(task);
         this.onClear();
-        this.props.Null_SelectedItem();
         this.props.CloseForm();
     }
     render() {

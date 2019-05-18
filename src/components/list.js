@@ -13,7 +13,6 @@ class List extends Component {
         });
         return (
             <div className="panel panel-success mx-auto">
-                <div className="panel-heading">List Task</div>
                 <table className="table table-hover ">
                     <thead>
                         <tr>
